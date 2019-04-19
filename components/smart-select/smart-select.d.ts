@@ -49,6 +49,8 @@ export namespace SmartSelect {
     virtualList?: boolean
     /** Virtual list item height. If number - list item height in px. If function then function should return item height */
     virtualListHeight?: number | Function
+    /** When enabled it will scroll smart select content to first selected item on open (default false) */
+    scrollToSelectedItem?: boolean
     /** Smart select page form color theme. One of the default colors */
     formColorTheme?: string
     /** Smart select navbar color theme. One of the default colors */
@@ -134,6 +136,8 @@ export namespace SmartSelect {
       open(el : HTMLElement | CSSSelector) : SmartSelect
       /** close Smart Select */
       close(el : HTMLElement | CSSSelector) : SmartSelect
+      /** Scroll smart select content to first selected item */
+      scrollToSelectedItem(): SmartSelect
     }
   }
   interface AppParams {

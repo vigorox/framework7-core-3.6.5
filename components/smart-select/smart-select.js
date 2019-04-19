@@ -21,6 +21,7 @@ export default {
       closeOnSelect: false,
       virtualList: false,
       virtualListHeight: undefined,
+      scrollToSelectedItem: false,
       formColorTheme: undefined,
       navbarColorTheme: undefined,
       routableModals: true,

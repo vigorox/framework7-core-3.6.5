@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 18, 2019
+ * Released on: April 19, 2019
  */
 
 (function (global, factory) {
@@ -19162,6 +19162,29 @@
       return popoverHtml;
     };
 
+    SmartSelect.prototype.scrollToSelectedItem = function scrollToSelectedItem () {
+      var ss = this;
+      var params = ss.params;
+      var $containerEl = ss.$containerEl;
+      if (!ss.opened) { return ss; }
+      if (params.virtualList) {
+        var selectedIndex;
+        ss.vl.items.forEach(function (item, index) {
+          if (typeof selectedIndex === 'undefined' && item.selected) {
+            selectedIndex = index;
+          }
+        });
+        if (typeof selectedIndex !== 'undefined') {
+          ss.vl.scrollToItem(selectedIndex);
+        }
+      } else {
+        var $selectedItemEl = $containerEl.find('input:checked').parents('li');
+        var $pageContentEl = $containerEl.find('.page-content');
+        $pageContentEl.scrollTop($selectedItemEl.offset().top - $pageContentEl.offset().top - parseInt($pageContentEl.css('padding-top'), 10));
+      }
+      return ss;
+    };
+
     SmartSelect.prototype.onOpen = function onOpen (type, containerEl) {
       var ss = this;
       var app = ss.app;
@@ -19182,6 +19205,10 @@
             return false;
           },
         });
+      }
+
+      if (ss.params.scrollToSelectedItem) {
+        ss.scrollToSelectedItem();
       }
 
       // Init SB
@@ -19494,6 +19521,7 @@
         closeOnSelect: false,
         virtualList: false,
         virtualListHeight: undefined,
+        scrollToSelectedItem: false,
         formColorTheme: undefined,
         navbarColorTheme: undefined,
         routableModals: true,
